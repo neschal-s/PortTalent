@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import {  Carousel,CarouselContent,CarouselItem } from "@/components/ui/carousel"
 import companies from '@/data/companies.json'
 import Autoplay from "embla-carousel-autoplay"
-import { Card,CardAction,CardContent,CardHeader,CardTitle } from "@/components/ui/card.jsx"
+import { Card,CardContent,CardHeader,CardTitle } from "@/components/ui/card"
 
 
 const landingPage = () => {
@@ -48,17 +48,25 @@ const landingPage = () => {
       <img src="./banner.jpeg" alt="banner" className='w-full'/>
 
 
-      <section>
+      <section className='grid grid-cols-1 md:grid-cols-2 gap-4'>
         <Card>
           <CardHeader>
-            <CardTitle>Card Title</CardTitle>
-            <CardAction>Card Action</CardAction>
+            <CardTitle className='font-light'>For Job Seekers</CardTitle>
           </CardHeader>
           <CardContent>
-            <p>Card Content</p>
+            <p className='font-extralight'>
+              Search and apply for jobs, track applications, and more.
+            </p>
           </CardContent>
-          <>
-            <p>Card Footer</p>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className='font-light'>For Employers</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className='font-extralight'>Post jobs, manage applications, and find the best candidate.</p>
+          </CardContent>
         </Card>
       </section>
 
