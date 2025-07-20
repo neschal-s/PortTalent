@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link, useSearchParams } from 'react-router-dom';
 import {Button,buttonVariants} from './ui/button';
-import { SignedIn, SignedOut, SignIn, SignInButton, UserButton } from '@clerk/clerk-react';
+import { SignedIn, SignedOut, SignIn, SignInButton, UserButton, useUser } from '@clerk/clerk-react';
 import { BriefcaseBusiness, BriefcaseBusinessIcon, Heart, HeartIcon, PenBox } from 'lucide-react';
 import { useState } from 'react';
 
@@ -10,6 +10,7 @@ import { useState } from 'react';
 
 const Header = () => {
   const [showSignedIn, setShowSignedIn] = useState(false);
+  const {user}=useUser();
 
   const [search,setSearch]=useSearchParams();
   useEffect(() => {
@@ -36,10 +37,13 @@ const Header = () => {
             <Button variant="outline" onClick={()=>setShowSignedIn(true)}>Login</Button>
           </SignedOut>
           <SignedIn>
-            <Button variant="destructive" className='rounded-full'>
-              <PenBox size={20} className='mr-2'/>
-              Post a Job</Button>
-              <Link to='/post-job'></Link>
+            { user?.unsafeMetadata?.role === 'recruiter' && (
+              <Link to='/post-job'>
+                  <Button variant="destructive" className='rounded-full'>
+                    <PenBox size={20} className='mr-2'/>
+                    Post a Job</Button>
+              </Link>
+            )}
             <UserButton
                 appearance={{elements:{avatarBox:"w-10 h-10"}}}>
                 <UserButton.MenuItems>
