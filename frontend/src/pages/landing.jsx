@@ -5,6 +5,9 @@ import {  Carousel,CarouselContent,CarouselItem } from "@/components/ui/carousel
 import companies from '@/data/companies.json'
 import Autoplay from "embla-carousel-autoplay"
 import { Card,CardContent,CardHeader,CardTitle } from "@/components/ui/card"
+import faqs from '@/data/faq.json'
+import {Accordion,AccordionContent,AccordionItem,AccordionTrigger,} from "@/components/ui/accordion"
+
 
 
 const landingPage = () => {
@@ -22,6 +25,7 @@ const landingPage = () => {
         </p>
 
       </section>
+      {/* getjob and post job button */}
       <div className='flex gap-6 justify-center'>
         <Link className='btn btn-primary' to='/jobs'>
           <Button variant='blue' size='xl'>Find Jobs</Button>
@@ -30,6 +34,7 @@ const landingPage = () => {
           <Button variant='destructive' size='xl'>Post a Job</Button>
         </Link> 
       </div>
+      {/* Carousel */}
       <div>
         <Carousel plugins={[Autoplay({ delay: 2000})]} 
           className="w-full py-10">
@@ -44,10 +49,11 @@ const landingPage = () => {
           </CarouselContent>
         </Carousel>
       </div>
-
+      
+      {/* banner */}
       <img src="./banner.jpeg" alt="banner" className='w-full'/>
 
-
+      {/* Card section */}
       <section className='grid grid-cols-1 md:grid-cols-2 gap-4'>
         <Card>
           <CardHeader>
@@ -71,6 +77,15 @@ const landingPage = () => {
       </section>
 
       {/* accordian */}
+      <Accordion type="single" collapsible>
+        {faqs.map((faqs,index)=>{
+          return (<AccordionItem key={index} value={`item-${index+1}`}>
+          <AccordionTrigger className='font-light'>{faqs.question}</AccordionTrigger>
+          <AccordionContent className='font-extralight'>{faqs.answer}</AccordionContent>
+        </AccordionItem>);
+        })}
+      </Accordion>
+
     </main>
   )
 }
