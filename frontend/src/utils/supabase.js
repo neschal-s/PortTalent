@@ -10,7 +10,7 @@ const supabaseClient = async(supabaseAcessToken) => {
         global: {
             headers: {
                 Authorization: `Bearer ${supabaseAcessToken}`,
-            },
+            }, 
         },
     });
     return supabase;

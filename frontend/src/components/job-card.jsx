@@ -4,7 +4,7 @@ import { Card, CardTitle, CardHeader, CardContent, CardFooter } from './ui/card'
 import { Heart, MapPinIcon, Trash2Icon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from './ui/button';
-import SaveJob from '@/api/apiJobs';
+import { saveJob } from '@/api/apiJobs'
 
 const JobCard = ({ job,
   isMyJob = false,
