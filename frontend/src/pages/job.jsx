@@ -1,5 +1,5 @@
 import { getSingleJob, updateHiringStatus } from '@/api/apiJobs';
-import ApplyJobDrawer from '@/components/ui/apply-jobs';
+import ApplyJobDrawer from '@/components/apply-jobs';
 import { Select, SelectItem, SelectTrigger, SelectValue, SelectContent } from '@/components/ui/select';
 import useFetch from '@/hooks/use-fetch';
 import { useUser } from '@clerk/clerk-react';
@@ -9,6 +9,7 @@ import { Briefcase, DoorClosed, DoorOpen, MapPinIcon } from 'lucide-react';
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import { BarLoader } from 'react-spinners';
+import ApplicationCard from './application-card';
 
 const JobPage = () => {
 
@@ -92,7 +93,19 @@ const JobPage = () => {
         fetchJob={fnJob}
         applied={job?.applications?.find((ap) => ap.candidate_id == user.id)}
       />}
+      {
+        job?.applications?.length > 0 && (job?.recruiter_id === user?.id) && (
+          <div>
+            <h2 className='text-2xl sm:text-3xl font-bold'>Applications</h2>
+            {
+              job?.applications.map((application) => {
+                return <ApplicationCard key={application.id} application={application} />
+              })
+            }
 
+          </div>
+        )
+      }
 
     </div>
   )
