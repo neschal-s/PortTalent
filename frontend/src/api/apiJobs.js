@@ -69,3 +69,23 @@ export async function updateHiringStatus(token,{job_id},isOpen){
     }
     return data;
 }
+
+
+// Delete job
+export async function deleteJob(token, { job_id }) {
+  const supabase = await supabaseClient(token);
+
+  const { data, error: deleteError } = await supabase
+    .from("jobs")
+    .delete()
+    .eq("id", job_id)
+    .select();
+
+  if (deleteError) {
+    console.error("Error deleting job:", deleteError);
+    return data;
+  }
+
+  return data;
+}
+

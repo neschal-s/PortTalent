@@ -1,8 +1,8 @@
 import supabaseClient from "@/utils/supabase";
-import { superBaseUrl } from "@/utils/constants"; // (if defined)
+// import { superBaseUrl } from "@/utils/constants";
 
 
-export async function applytoJob(token,_,jobData){
+export async function applyToJob(token,_,jobData){
     const supabase=await supabaseClient(token);
 
     const random=Math.floor(Math.random()*90000);
@@ -20,6 +20,18 @@ export async function applytoJob(token,_,jobData){
 
     if(error){
         console.error("Error submitting Application",error);
+        return null;
+    }
+    return data;
+}
+
+
+export async function updateApplicationStatus(token,{job_id},status){
+    const supabase=await supabaseClient(token);
+
+    const {data,error}=await supabase.from("companies").update({status}).eq("job_id",job_id).select();
+    if(error || data.length===0){
+        console.error("Error Updating Application status",error);
         return null;
     }
     return data;

@@ -62,17 +62,16 @@ const AppLayout = () => {
               </svg>
             </a>
           </span>
-          <span
-            className="flex aspect-square cursor-pointer items-center justify-center rounded-full size-12">
+          <span className="flex aspect-square cursor-pointer items-center justify-center rounded-full size-12">
             <a
-              href="mailto:singhneschal@gmail.com"
-              className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground rounded-full size-12"
-              data-state="closed"
+              href="https://mail.google.com/mail/?view=cm&to=singhneschal@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Email via Gmail"
+              className="inline-flex items-center justify-center size-12 rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -86,6 +85,7 @@ const AppLayout = () => {
               </svg>
             </a>
           </span>
+
         </div>
       </div>
 
