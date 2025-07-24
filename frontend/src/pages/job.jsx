@@ -1,7 +1,9 @@
 import { getSingleJob, updateHiringStatus } from '@/api/apiJobs';
-import { Select, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import ApplyJobDrawer from '@/components/ui/apply-jobs';
+import { Select, SelectItem, SelectTrigger, SelectValue, SelectContent } from '@/components/ui/select';
 import useFetch from '@/hooks/use-fetch';
 import { useUser } from '@clerk/clerk-react';
+// import { SelectContent } from '@radix-ui/react-select';
 import MDEditor from '@uiw/react-md-editor';
 import { Briefcase, DoorClosed, DoorOpen, MapPinIcon } from 'lucide-react';
 import React, { useEffect } from 'react'
@@ -12,36 +14,36 @@ const JobPage = () => {
 
   const { isLoaded, user } = useUser();
 
-  const {id}=useParams();
+  const { id } = useParams()
 
   const {
-    loading:loadingJob,
-    data:job,
-    fn:fnJob
-  }=useFetch(getSingleJob,{job_id:id});
+    loading: loadingJob,
+    data: job,
+    fn: fnJob
+  } = useFetch(getSingleJob, { job_id: id });
 
 
 
 
   const {
-    loading:loadingHiringStatus,
-    fn:fnHiringStatus
-  }=useFetch(updateHiringStatus,{job_id:id});
+    loading: loadingHiringStatus,
+    fn: fnHiringStatus
+  } = useFetch(updateHiringStatus, { job_id: id });
 
-  const handleStatusChange=()=>{
-    const isOpen=value==="open"
-    fnHiringStatus(isOpen).then(()=>fnJob());
+  const handleStatusChange = (value) => {
+    const isOpen = value === "open"
+    fnHiringStatus(isOpen).then(() => fnJob());
   }
- 
-  useEffect(()=>{
-    if(isLoaded){
-      fnJob();
-    } 
-  },[isLoaded])
 
-  if(!isLoaded || loadingJob)
-  {
-    return <BarLoader className='mb-4' width={'100%'} color='#36d7b7'/>  }
+  useEffect(() => {
+    if (isLoaded) {
+      fnJob();
+    }
+  }, [isLoaded])
+
+  if (!isLoaded || loadingJob) {
+    return <BarLoader className='mb-4' width={'100%'} color='#36d7b7' />
+  }
 
   return (
     <div className='flex flex-col gap-8 mt-5'>
@@ -49,7 +51,7 @@ const JobPage = () => {
         <h1 className='gradient-title font-extrabold pb-3 text-4xl sm:text-6xl'>
           {job?.title}
         </h1>
-        <img src={job?.company?.logo_url} className='h-12' alt={job?.title}/>
+        <img src={job?.company?.logo_url} className='h-12' alt={job?.title} />
       </div>
 
       <div className='flex justify-between'>
@@ -58,31 +60,40 @@ const JobPage = () => {
           {job?.location}
         </div>
         <div className='flex gap-2'>
-          <Briefcase/>
+          <Briefcase />
           {job?.applications?.length} Applicants
         </div>
         <div className='flex gap-2'>
-          {job?.isOpen?<><DoorOpen/> Open</>:<><DoorClosed/> Closed</>}
+          {job?.isOpen ? <><DoorOpen /> Open</> : <><DoorClosed /> Closed</>}
         </div>
       </div>
-      {!loadingHiringStatus && <BarLoader width={'100%'} color='#36d7b7'/>}
-      {job?.recruiter_id===user?.id && (
+      {loadingHiringStatus && <BarLoader width={'100%'} color='#36d7b7' />}
+      {job?.recruiter_id === user?.id && (
         <Select onValueChange={handleStatusChange}>
-        <SelectTrigger className={`w-full ${job?.isOpen ?"bg-green-950":"bg-red-950"}`}>
-          <SelectValue placeholder={
-            "Hiring Status"+ (job?.isOpen ? "(Open)": "(Closed)")
-          } />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="open">Open</SelectItem>
-          <SelectItem value="closed">Closed</SelectItem>
-        </SelectContent>
-      </Select>)}
+          <SelectTrigger className={`w-full ${job?.isOpen ? "bg-green-950" : "bg-red-950"}`}>
+            <SelectValue placeholder={
+              "Hiring Status" + (job?.isOpen ? "(Open)" : "(Closed)")
+            } />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="open">Open</SelectItem>
+            <SelectItem value="closed">Closed</SelectItem>
+          </SelectContent>
+        </Select>)}
       <h2 className='text-2xl sm:text-3xl font-bold'>About the Job</h2>
       <p className='sm:text-lg'>{job?.description}</p>
 
       <h2 className='text-2xl sm:text-3xl font-bold'>What we are looking for</h2>
-      <MDEditor.Markdown source={job?.requirements} className='bg-transparent sm:text-lg'/>
+      <MDEditor.Markdown source={job?.requirements} className='bg-transparent sm:text-lg' />
+
+      {job?.recruiter_id !== user?.id && <ApplyJobDrawer
+        job={job}
+        user={user}
+        fetchJob={fnJob}
+        applied={job?.applications?.find((ap) => ap.candidate_id == user.id)}
+      />}
+
+
     </div>
   )
 }
