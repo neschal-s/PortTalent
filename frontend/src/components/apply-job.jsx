@@ -154,7 +154,6 @@ export function ApplyJobDrawer({ user, job, fetchJob, applied = false }) {
             Apply
           </Button>
         </form>
-
         <DrawerFooter>
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>

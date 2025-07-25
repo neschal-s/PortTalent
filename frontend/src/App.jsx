@@ -3,13 +3,13 @@ import './App.css'
 import { ThemeProvider } from "@/components/theme-provider"
 import AppLayout from './layouts/app-layouts'
 import LandingPage from './pages/landing'
-import OnBoarding from './pages/onBoarding'
+import Onboarding from './pages/onboarding'
 import JobPage from './pages/job'
-import JobListing from './pages/job-listing'
+import JobListing from './pages/jobListing'
 import PostJob from './pages/post-job'
-import SavedJobs from './pages/saved-job'
+import SavedJobs from './pages/saved-jobs'
 import MyJobs from './pages/my-jobs'
-import ProtectedRoute from './components/ui/protected-route'
+import ProtectedRoute from './components/protected-route'
 
 
 
@@ -23,7 +23,7 @@ const router=createBrowserRouter([{
       path:'/onboarding',
       element:(
         <ProtectedRoute>
-          <OnBoarding/>
+          <Onboarding/>
         </ProtectedRoute>
       )
     }
