@@ -12,7 +12,6 @@ import { BriefcaseBusiness, Heart, PenBox } from "lucide-react";
 
 const Header = () => {
   const [showSignIn, setShowSignIn] = useState(false);
-
   const [search, setSearch] = useSearchParams();
   const { user } = useUser();
 
@@ -21,6 +20,19 @@ const Header = () => {
       setShowSignIn(true);
     }
   }, [search]);
+
+  useEffect(() => {
+  if (showSignIn) {
+    document.body.style.overflow = "hidden"; // disable background scroll
+  } else {
+    document.body.style.overflow = ""; // re-enable scroll
+  }
+
+  return () => {
+    document.body.style.overflow = ""; // clean up on unmount
+  };
+}, [showSignIn]);
+
 
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -78,7 +90,7 @@ const Header = () => {
 
       {showSignIn && (
         <div
-          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+          className="fixed inset-0 flex items-center justify-center  bg-black bg-opacity-50"
           onClick={handleOverlayClick}
         >
           <SignIn
