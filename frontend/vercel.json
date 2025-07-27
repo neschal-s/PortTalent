@@ -1,3 +1,4 @@
+@'
 {
   "version": 2,
   "builds": [
@@ -16,3 +17,4 @@
     }
   ]
 }
+'@ | Set-Content -Encoding utf8 vercel.json
