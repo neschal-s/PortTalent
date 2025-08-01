@@ -22,16 +22,16 @@ const Header = () => {
   }, [search]);
 
   useEffect(() => {
-  if (showSignIn) {
-    document.body.style.overflow = "hidden"; // disable background scroll
-  } else {
-    document.body.style.overflow = ""; // re-enable scroll
-  }
+    if (showSignIn) {
+      document.body.style.overflow = "hidden"; // disable background scroll
+    } else {
+      document.body.style.overflow = ""; // re-enable scroll
+    }
 
-  return () => {
-    document.body.style.overflow = ""; // clean up on unmount
-  };
-}, [showSignIn]);
+    return () => {
+      document.body.style.overflow = ""; // clean up on unmount
+    };
+  }, [showSignIn]);
 
 
   const handleOverlayClick = (e) => {
@@ -93,10 +93,16 @@ const Header = () => {
           className="fixed inset-0 flex items-center justify-center  bg-black bg-opacity-50"
           onClick={handleOverlayClick}
         >
-          <SignIn
+          {/* <SignIn
             signUpForceRedirectUrl="/onboarding"
             fallbackRedirectUrl="/onboarding"
+          /> */}
+
+          <SignIn
+            signUpForceRedirectUrl={window.location.origin + "/onboarding"}
+            fallbackRedirectUrl={window.location.origin + "/onboarding"}
           />
+
         </div>
       )}
     </>
